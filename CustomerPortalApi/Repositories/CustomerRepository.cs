@@ -13,9 +13,19 @@ namespace CustomerPortalApi.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Customer>> GetAllCustomersAsync()
+        public async Task<int> GetToalCustomerCountAsync()
         {
-            return await _context.Customers.ToListAsync();
+            return await _context.Customers.CountAsync();
+        }
+
+        public async Task<IEnumerable<Customer>> GetAllCustomersAsync(int currentPage, int itemsPerPage)
+        {
+            int skipAmount = (currentPage - 1) * itemsPerPage;
+
+            return await _context.Customers
+                                 .Skip(skipAmount)
+                                 .Take(itemsPerPage)
+                                 .ToListAsync();
         }
 
         public async Task<Customer> GetCustomerByIdAsync(int id)

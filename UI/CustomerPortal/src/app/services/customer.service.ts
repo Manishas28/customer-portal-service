@@ -12,8 +12,12 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
-  getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(this.apiUrl);
+  getTotalCustomersCount(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/total`);
+  }
+
+  getCustomers(currentPage: number = 1, itemsPerPage: number = 10): Observable<Customer[]> {
+    return this.http.get<Customer[]>(`${this.apiUrl}?currentPage=${currentPage}&itemsPerPage=${itemsPerPage}`);
   }
 
   getCustomerById(id: number): Observable<Customer> {

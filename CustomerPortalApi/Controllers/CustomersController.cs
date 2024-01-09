@@ -15,11 +15,18 @@ namespace CustomerPortalApi.Controllers
             _customerRepository = customerRepository;
         }
 
+        // GET: api/Customers/total
+        [HttpGet("total")]
+        public async Task<ActionResult<IEnumerable<Customer>>> GetTotalCustomers()
+        {
+            return Ok(await _customerRepository.GetToalCustomerCountAsync());
+        }
+
         // GET: api/Customers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
+        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers([FromQuery] int currentPage = 1, [FromQuery] int itemsPerPage = 10)
         {
-            return Ok(await _customerRepository.GetAllCustomersAsync());
+            return Ok(await _customerRepository.GetAllCustomersAsync(currentPage, itemsPerPage));
         }
 
         // GET: api/Customers/5

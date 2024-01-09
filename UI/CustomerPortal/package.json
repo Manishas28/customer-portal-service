@@ -25,6 +25,8 @@
     "datatables.net": "^1.13.8",
     "datatables.net-dt": "^1.13.8",
     "jquery": "^3.7.1",
+    "ngx-bootstrap": "^12.0.0",
+    "ngx-pagination": "^6.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
@@ -34,7 +36,9 @@
     "@angular/cli": "^17.0.9",
     "@angular/compiler-cli": "^17.0.0",
     "@angular/localize": "^17.0.0",
+    "@types/datatables.net": "^1.10.21",
     "@types/jasmine": "~5.1.0",
+    "@types/jquery": "^3.5.9",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
