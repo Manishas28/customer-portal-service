@@ -1,4 +1,5 @@
 ﻿using CustomerPortalApi.Data;
+using CustomerPortalApi.Extensions;
 using CustomerPortalApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,16 +14,20 @@ namespace CustomerPortalApi.Repositories
             _context = context;
         }
 
-        public async Task<int> GetToalCustomerCountAsync()
+        public async Task<int> GetToalCustomerCountAsync(string searchInput)
         {
-            return await _context.Customers.CountAsync();
+            return await _context.Customers
+                .WhereIf(!string.IsNullOrWhiteSpace(searchInput), x => (x.FirstName + " " + x.LastName).Contains(searchInput) || x.Email.Contains(searchInput))
+                .CountAsync();
         }
 
-        public async Task<IEnumerable<Customer>> GetAllCustomersAsync(int currentPage, int itemsPerPage)
+
+        public async Task<IEnumerable<Customer>> GetAllCustomersAsync(int currentPage, int itemsPerPage, string searchInput)
         {
             int skipAmount = (currentPage - 1) * itemsPerPage;
 
             return await _context.Customers
+                                 .WhereIf(!string.IsNullOrWhiteSpace(searchInput), x => (x.FirstName + " " + x.LastName).Contains(searchInput) || x.Email.Contains(searchInput))
                                  .Skip(skipAmount)
                                  .Take(itemsPerPage)
                                  .ToListAsync();
@@ -55,5 +60,6 @@ namespace CustomerPortalApi.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
     }
 }

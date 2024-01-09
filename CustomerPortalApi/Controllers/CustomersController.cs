@@ -17,16 +17,16 @@ namespace CustomerPortalApi.Controllers
 
         // GET: api/Customers/total
         [HttpGet("total")]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetTotalCustomers()
+        public async Task<ActionResult<IEnumerable<Customer>>> GetTotalCustomers(string? searchInput)
         {
-            return Ok(await _customerRepository.GetToalCustomerCountAsync());
+            return Ok(await _customerRepository.GetToalCustomerCountAsync(searchInput));
         }
 
         // GET: api/Customers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers([FromQuery] int currentPage = 1, [FromQuery] int itemsPerPage = 10)
+        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers([FromQuery] string? searchInput, [FromQuery] int currentPage = 1, [FromQuery] int itemsPerPage = 10)
         {
-            return Ok(await _customerRepository.GetAllCustomersAsync(currentPage, itemsPerPage));
+            return Ok(await _customerRepository.GetAllCustomersAsync(currentPage, itemsPerPage, searchInput));
         }
 
         // GET: api/Customers/5
